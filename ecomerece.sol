@@ -33,25 +33,17 @@ contract Ecommerece {
     }
 
     function buy ( uint _productId ) payable public {
-
-        require(products[_productId-1].price == msg.value,"Please pay the exact price " );
+        require(products[_productId-1].price == msg.value,"Please pay the exact price");
         require(products[_productId-1].seller != msg.sender,"Seller can't be the buyer");
-
         products[_productId-1].buyer = msg.sender;
         emit bought(_productId , msg.sender);
-
-
-
     }
 
     function delivery(uint _productId) public {
-
         require(products[_productId-1].buyer == msg.sender,"Only buyer can confirm product" );
         products[_productId-1].delivered = true;
         products[_productId-1].seller.transfer(products[_productId-1].price);
         emit delivered(_productId);
-
-
     }
     
 
